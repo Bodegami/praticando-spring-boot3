@@ -1,0 +1,12 @@
+
+
+
+FLYWAY
+
+- Sempre que for subir uma alteração no banco de dados, pare a aplicação, crie um novo arquivo .sql
+no diretorio /resources/db/migration, seguindo o padrao "V" + numero da versao + __ + nome descritivo.
+
+- caso suba uma migration com erro no sql, o historico de migration ficara poluido e vai acusar erro ao tentar subir uma correcao.
+Você pode resolver esse problema subindo um arquivo migration criando uma nova versão, por exemplo:
+Digamos que a minha versao 4 (V4) apresentou erro durante a execucao. Eu crio um novo arquivo migration corrigido mas com a versao 4.1 (V4_1__exemplo.sql).
+Ou vode excluir a versão com erro direto no banco de dados (delete from flyway_schema_history where version = '4';)
