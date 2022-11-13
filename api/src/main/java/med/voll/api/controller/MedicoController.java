@@ -29,7 +29,7 @@ public class MedicoController {
     //A anotacao PageableDefault permite definir os parametros de paginação default, caso não seja passado nenhum na url
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<DadosListagemMedico> listar(@PageableDefault(size = 3, page = 0, sort = {"nome", "crm"}) Pageable paginacao) {
-        return medicoRepository.findAll(paginacao).map(DadosListagemMedico::new);
+        return medicoRepository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new);
     }
 
     @PutMapping
@@ -39,11 +39,17 @@ public class MedicoController {
         medico.atualizarInformacoes(dados);
     }
 
+    @DeleteMapping("/delete/{id}")
+    @Transactional
+    public void exclusaoDefinitiva(@PathVariable Long id) {
+        medicoRepository.deleteById(id);
+    }
+
     @DeleteMapping("/{id}")
     @Transactional
     public void excluir(@PathVariable Long id) {
-        medicoRepository.deleteById(id)
-        ;
+        var medico = medicoRepository.getReferenceById(id);
+        medico.excluir();
     }
 
 }
