@@ -7,6 +7,7 @@ import med.voll.api.medico.Medico;
 import med.voll.api.medico.MedicoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +29,9 @@ public class MedicoController {
         medicoRepository.save(new Medico(dados));
     }
 
+    //A anotacao PageableDefault permite definir os parametros de paginação default, caso não seja passado nenhum na url
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<DadosListagemMedico> listar(Pageable paginacao) {
+    public Page<DadosListagemMedico> listar(@PageableDefault(size = 3, page = 0, sort = {"nome", "crm"}) Pageable paginacao) {
         return medicoRepository.findAll(paginacao).map(DadosListagemMedico::new);
     }
 

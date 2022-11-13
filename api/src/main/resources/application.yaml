@@ -3,3 +3,17 @@ spring:
     url: jdbc:mysql://localhost:3306/vollmed_api
     username: root
     password: root
+
+# Alterando o nome padrão do atributos de paginacao como page, size e sort
+  data:
+    web:
+      pageable:
+        page-parameter: pagina
+        size-parameter: tamanho
+        sort-parameter: ordem
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
