@@ -45,9 +45,9 @@ public class PacienteController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public void excluir(@PathVariable Long id) {
+    public void exclusaoLogica(@PathVariable Long id) {
         var paciente = pacienteRepository.getReferenceById(id);
-        paciente.excluir();
+        paciente.inativar();
     }
 
 
